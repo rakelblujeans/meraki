@@ -1,0 +1,33 @@
+[% PROCESS macros.tt2 %]
+<div id="event_detail">
+
+
+[% is_authorized = event.is_creator || c.user.is_admin %]
+[% IF is_authorized %]
+	<p>Would you like to <a href="[% c.uri_for('/events/edit/' _ event.event_id ) %]">edit</a> the page?</p>
+[% END %]
+
+	<h1>[% event.name %]</h1>
+
+	<div id="field_label">Location:</div>
+	<a href="[% c.uri_for('/venues/detail/' _ location_id) %]">
+		<div id="field_val">[% location_name %]</div>
+	</a><br/>
+	[% label('Organizers:', event.organizer_name ) %]
+	[% label('Email:', event.email) %]
+	[% label('Music Genre:', event.music_genre) %]
+	[% label('Artists:', event.artists) %]
+	[% label('Start Time:', event.start_time) %]
+	[% label('Tickets Url:', event.tickets_url) %]
+	[% label('Ticket Price:', event.ticket_price) %]
+	[% label('More info:', event.more_info) %]
+	[% label('Youtube Embed Code:', event.youtube_url) %]
+	[% label('Additional Description:', event.additional_description) %]
+	[% label('Privacy Level:', event.privacy) %]
+	
+	<h2 id="twitter_hype">Twitter hype:
+		<!-- TODO: add in twitter search results
+		format results from https://dev.twitter.com/docs/using-search -->
+	</h2>
+
+</div><!-- event detail -->

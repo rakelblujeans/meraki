@@ -1,0 +1,582 @@
+---
+schema:
+  procedures: {}
+  tables:
+    dbix_class_deploymenthandler_versions:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - version
+          match_type: ''
+          name: dbix_class_deploymenthandler_versions_version
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: UNIQUE
+      fields:
+        ddl:
+          data_type: text
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: ddl
+          order: 3
+          size:
+            - 0
+        id:
+          data_type: int
+          default_value: ~
+          is_auto_increment: 1
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 0
+        upgrade_sql:
+          data_type: text
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: upgrade_sql
+          order: 4
+          size:
+            - 0
+        version:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 1
+          name: version
+          order: 2
+          size:
+            - 50
+      indices: []
+      name: dbix_class_deploymenthandler_versions
+      options: []
+      order: 1
+  triggers: {}
+  views: {}
+translator:
+  add_drop_table: 0
+  filename: ~
+  no_comments: 0
+  parser_args:
+    package: &1 !!perl/hash:DanceParty::Schema
+      class_mappings:
+        DBIx::Class::DeploymentHandler::VersionStorage::Standard::VersionResult: __VERSION
+        DanceParty::Schema::Result::Event: Event
+        DanceParty::Schema::Result::Location: Location
+        DanceParty::Schema::Result::LocationType: LocationType
+        DanceParty::Schema::Result::Role: Role
+        DanceParty::Schema::Result::User: User
+        DanceParty::Schema::Result::UserRole: UserRole
+      source_registrations:
+        Event: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            artists:
+              data_type: citext
+              is_nullable: 0
+            email:
+              data_type: citext
+              is_nullable: 1
+            event_id:
+              data_type: integer
+              is_auto_increment: 1
+              is_nullable: 0
+              sequence: event_event_id_seq
+            event_name:
+              data_type: citext
+              is_nullable: 0
+            location_id:
+              data_type: integer
+              is_foreign_key: 1
+              is_nullable: 0
+            more_info_url:
+              data_type: citext
+              is_nullable: 1
+            music_genre:
+              data_type: citext
+              is_nullable: 0
+            organizer_name:
+              data_type: citext
+              is_nullable: 0
+            rsvp_url:
+              data_type: citext
+              is_nullable: 1
+            start_time:
+              _ic_dt_method: timestamp
+              _inflate_info:
+                deflate: !!perl/code '{ "DUMMY" }'
+                inflate: !!perl/code '{ "DUMMY" }'
+              data_type: timestamp
+              is_nullable: 0
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - event_id
+            - event_name
+            - organizer_name
+            - email
+            - music_genre
+            - artists
+            - start_time
+            - more_info_url
+            - rsvp_url
+            - location_id
+          _primaries: &2
+            - event_id
+          _relationships:
+            location:
+              attrs:
+                accessor: single
+                fk_columns:
+                  location_id: 1
+                is_deferrable: 1
+                is_foreign_key_constraint: 1
+                on_delete: CASCADE
+                on_update: CASCADE
+                undef_on_null_fk: 1
+              class: DanceParty::Schema::Result::Location
+              cond:
+                foreign.location_id: self.location_id
+              source: DanceParty::Schema::Result::Location
+          _unique_constraints:
+            event_event_name:
+              - event_name
+            primary: *2
+          name: event
+          result_class: DanceParty::Schema::Result::Event
+          resultset_attributes: {}
+          resultset_class: DanceParty::Schema::ResultSet::Event
+          schema: *1
+          source_name: Event
+        Location: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            address:
+              data_type: text
+              is_nullable: 0
+            lat:
+              data_type: double precision
+              is_nullable: 0
+            location_id:
+              data_type: integer
+              is_auto_increment: 1
+              is_nullable: 0
+              sequence: location_location_id_seq
+            location_name:
+              data_type: text
+              is_nullable: 0
+            location_type_id:
+              data_type: integer
+              is_foreign_key: 1
+              is_nullable: 0
+            long:
+              data_type: double precision
+              is_nullable: 0
+            phone:
+              data_type: text
+              is_nullable: 1
+            url:
+              data_type: text
+              is_nullable: 1
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - location_id
+            - location_type_id
+            - location_name
+            - phone
+            - address
+            - url
+            - lat
+            - long
+          _primaries: &3
+            - location_id
+          _relationships:
+            events:
+              attrs:
+                accessor: multi
+                cascade_copy: 0
+                cascade_delete: 0
+                join_type: LEFT
+              class: DanceParty::Schema::Result::Event
+              cond:
+                foreign.location_id: self.location_id
+              source: DanceParty::Schema::Result::Event
+            location_type:
+              attrs:
+                accessor: single
+                fk_columns:
+                  location_type_id: 1
+                is_deferrable: 1
+                is_foreign_key_constraint: 1
+                on_delete: CASCADE
+                on_update: CASCADE
+                undef_on_null_fk: 1
+              class: DanceParty::Schema::Result::LocationType
+              cond:
+                foreign.location_type_id: self.location_type_id
+              source: DanceParty::Schema::Result::LocationType
+          _unique_constraints:
+            primary: *3
+          name: location
+          result_class: DanceParty::Schema::Result::Location
+          resultset_attributes: {}
+          resultset_class: DBIx::Class::ResultSet
+          schema: *1
+          source_name: Location
+        LocationType: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            location_type:
+              data_type: text
+              is_nullable: 0
+            location_type_id:
+              data_type: integer
+              is_auto_increment: 1
+              is_nullable: 0
+              sequence: location_type_location_type_id_seq
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - location_type_id
+            - location_type
+          _primaries: &4
+            - location_type_id
+          _relationships:
+            locations:
+              attrs:
+                accessor: multi
+                cascade_copy: 0
+                cascade_delete: 0
+                join_type: LEFT
+              class: DanceParty::Schema::Result::Location
+              cond:
+                foreign.location_type_id: self.location_type_id
+              source: DanceParty::Schema::Result::Location
+          _unique_constraints:
+            primary: *4
+          name: location_type
+          result_class: DanceParty::Schema::Result::LocationType
+          resultset_attributes: {}
+          resultset_class: DBIx::Class::ResultSet
+          schema: *1
+          source_name: LocationType
+        Role: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            role_id:
+              data_type: serial
+            role_name:
+              data_type: text
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - role_id
+            - role_name
+          _primaries: &5
+            - role_id
+          _relationships: {}
+          _unique_constraints:
+            primary: *5
+            role_role_name:
+              - role_name
+          name: role
+          result_class: DanceParty::Schema::Result::Role
+          resultset_attributes: {}
+          resultset_class: DBIx::Class::ResultSet
+          schema: *1
+          source_name: Role
+        User: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            active:
+              data_type: bool
+              default_value: 0
+            city:
+              data_type: text
+              is_nullable: 1
+            created_at:
+              _ic_dt_method: timestamp
+              _inflate_info:
+                deflate: !!perl/code '{ "DUMMY" }'
+                inflate: !!perl/code '{ "DUMMY" }'
+              data_type: timestamp
+              dynamic_default_on_create: get_timestamp
+            email:
+              data_type: citext
+            lat:
+              data_type: integer
+              is_nullable: 1
+            lng:
+              data_type: integer
+              is_nullable: 1
+            name:
+              data_type: text
+            password:
+              _inflate_info:
+                deflate: !!perl/code '{ "DUMMY" }'
+                inflate: !!perl/code '{ "DUMMY" }'
+              inflate_passphrase: rfc2307
+              passphrase: rfc2307
+              passphrase_args:
+                algorithm: SHA-1
+                salt_random: 20
+              passphrase_check_method: check_password
+              passphrase_class: SaltedDigest
+            updated_at:
+              _ic_dt_method: timestamp
+              _inflate_info:
+                deflate: !!perl/code '{ "DUMMY" }'
+                inflate: !!perl/code '{ "DUMMY" }'
+              data_type: timestamp
+              dynamic_default_on_update: get_timestamp
+            user_id:
+              data_type: serial
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - user_id
+            - email
+            - name
+            - password
+            - city
+            - lat
+            - lng
+            - active
+            - created_at
+            - updated_at
+          _primaries: &6
+            - user_id
+          _relationships: {}
+          _unique_constraints:
+            primary: *6
+            user_email:
+              - email
+          name: user
+          result_class: DanceParty::Schema::Result::User
+          resultset_attributes: {}
+          resultset_class: DBIx::Class::ResultSet
+          schema: *1
+          source_name: User
+        UserRole: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            created_at:
+              _ic_dt_method: timestamp
+              _inflate_info:
+                deflate: !!perl/code '{ "DUMMY" }'
+                inflate: !!perl/code '{ "DUMMY" }'
+              data_type: timestamp
+              dynamic_default_on_create: get_timestamp
+            role_id:
+              data_type: integer
+            updated_at:
+              _ic_dt_method: timestamp
+              _inflate_info:
+                deflate: !!perl/code '{ "DUMMY" }'
+                inflate: !!perl/code '{ "DUMMY" }'
+              data_type: timestamp
+              dynamic_default_on_update: get_timestamp
+            user_id:
+              data_type: integer
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - user_id
+            - role_id
+            - created_at
+            - updated_at
+          _primaries: &7
+            - user_id
+            - role_id
+          _relationships: {}
+          _unique_constraints:
+            primary: *7
+            user_role_user_id_role_id:
+              - user_id
+              - role_id
+          name: user_role
+          result_class: DanceParty::Schema::Result::UserRole
+          resultset_attributes: {}
+          resultset_class: DBIx::Class::ResultSet
+          schema: *1
+          source_name: UserRole
+        __VERSION: !!perl/hash:DBIx::Class::ResultSource::Table
+          _columns:
+            ddl:
+              data_type: text
+              is_nullable: 1
+            id:
+              data_type: int
+              is_auto_increment: 1
+            upgrade_sql:
+              data_type: text
+              is_nullable: 1
+            version:
+              data_type: varchar
+              size: 50
+          _columns_info_loaded: 0
+          _ordered_columns:
+            - id
+            - version
+            - ddl
+            - upgrade_sql
+          _primaries: &8
+            - id
+          _relationships: {}
+          _unique_constraints:
+            dbix_class_deploymenthandler_versions_version:
+              - version
+            primary: *8
+          name: dbix_class_deploymenthandler_versions
+          result_class: DBIx::Class::DeploymentHandler::VersionStorage::Standard::VersionResult
+          resultset_attributes: {}
+          resultset_class: DBIx::Class::DeploymentHandler::VersionStorage::Standard::VersionResultSet
+          schema: *1
+          source_name: __VERSION
+      storage: !!perl/hash:DBIx::Class::Storage::DBI
+        _connect_info:
+          - dbi:Pg:dbname=danceparty
+          - raquelbujans
+          - kermitLovesYou
+        _dbh_details: {}
+        _dbh_gen: 0
+        _dbi_connect_info:
+          - dbi:Pg:dbname=danceparty
+          - raquelbujans
+          - kermitLovesYou
+          - &9
+            AutoCommit: 1
+            PrintError: 0
+            RaiseError: 1
+            ShowErrorStatement: 1
+        _dbic_connect_attributes: *9
+        _in_do_block: 0
+        _sql_maker: ~
+        _sql_maker_opts: {}
+        savepoints: []
+        schema: *1
+        transaction_depth: 0
+      vschema: &10 !!perl/hash:DBIx::Class::Version
+        class_mappings:
+          DBIx::Class::Version::Table: Table
+        source_registrations:
+          Table: !!perl/hash:DBIx::Class::ResultSource::Table
+            _columns:
+              installed:
+                data_type: VARCHAR
+                default_value: ~
+                is_auto_increment: 0
+                is_foreign_key: 0
+                is_nullable: 0
+                name: installed
+                size: 20
+              version:
+                data_type: VARCHAR
+                default_value: ~
+                is_auto_increment: 0
+                is_foreign_key: 0
+                is_nullable: 0
+                name: version
+                size: 10
+            _columns_info_loaded: 0
+            _ordered_columns:
+              - version
+              - installed
+            _primaries: &11
+              - version
+            _relationships: {}
+            _unique_constraints:
+              primary: *11
+            name: dbix_class_schema_versions
+            result_class: DBIx::Class::Version::Table
+            resultset_attributes: {}
+            resultset_class: DBIx::Class::ResultSet
+            schema: *10
+            source_name: Table
+        storage: !!perl/hash:DBIx::Class::Storage::DBI::Pg
+          _conn_pid: 48304
+          _connect_info:
+            - dbi:Pg:dbname=danceparty
+            - raquelbujans
+            - kermitLovesYou
+          _dbh: !!perl/hash:DBI::db {}
+          _dbh_autocommit: 1
+          _dbh_details:
+            _datatype_map_cache:
+              integer: ~
+          _dbh_gen: 0
+          _dbi_connect_info:
+            - dbi:Pg:dbname=danceparty
+            - raquelbujans
+            - kermitLovesYou
+            - &12
+              AutoCommit: 1
+              PrintError: 0
+              RaiseError: 1
+              ShowErrorStatement: 1
+          _dbic_connect_attributes: *12
+          _driver_determined: 1
+          _in_do_block: 0
+          _sql_maker: !!perl/hash:DBIx::Class::SQLMaker
+            array_datatypes: 1
+            bindtype: columns
+            cmp: =
+            equality_op: !!perl/regexp (?i-xsm:^(\=|is|(is\s+)?like)$)
+            inequality_op: !!perl/regexp (?i-xsm:^(!=|<>|(is\s+)?not(\s+like)?)$)
+            injection_guard: !!perl/regexp |-
+              (?mix-s:
+                  \;
+                    |
+                  ^ \s* go \s
+                )
+            limit_dialect: LimitOffset
+            logic: OR
+            name_sep: .
+            special_ops:
+              - handler: _where_field_BETWEEN
+                regex: !!perl/regexp '(?ix-sm:^ (?: not \s )? between $)'
+              - handler: _where_field_IN
+                regex: !!perl/regexp '(?ix-sm:^ (?: not \s )? in      $)'
+              - &13
+                handler: _where_op_IDENT
+                regex: !!perl/regexp (?ix-sm:^ ident $)
+              - &14
+                handler: _where_op_VALUE
+                regex: !!perl/regexp (?ix-sm:^ value $)
+            sqlfalse: 0=1
+            sqltrue: 1=1
+            unary_ops:
+              - handler: _where_op_ANDOR
+                regex: !!perl/regexp '(?ix-sm:^ and  (?: [_\s]? \d+ )? $)'
+              - handler: _where_op_ANDOR
+                regex: !!perl/regexp '(?ix-sm:^ or   (?: [_\s]? \d+ )? $)'
+              - handler: _where_op_NEST
+                regex: !!perl/regexp '(?ix-sm:^ nest (?: [_\s]? \d+ )? $)'
+              - handler: _where_op_BOOL
+                regex: !!perl/regexp '(?ix-sm:^ (?: not \s )? bool     $)'
+              - *13
+              - *14
+          _sql_maker_opts: {}
+          savepoints: []
+          schema: *10
+          transaction_depth: 0
+    sources:
+      - __VERSION
+  parser_type: SQL::Translator::Parser::DBIx::Class
+  producer_args: {}
+  producer_type: SQL::Translator::Producer::YAML
+  show_warnings: 0
+  trace: 0
+  version: 0.11011

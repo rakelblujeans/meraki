@@ -1,0 +1,55 @@
+[% PROCESS macros.tt2 %]
+<div id="venue_detail">
+
+[% is_authorized = venue.is_creator || c.user.is_admin %]
+[% IF is_authorized %]
+	<p>Would you like to <a href="[% c.uri_for('/venues/edit/' _ venue.location_id ) %]">edit</a> the page?</p>
+[% END %]
+
+<h1>[% venue.name%]</h1>
+[% label('Type of place:', location_type) %]
+[% label('Phone:', venue.phone, 'tel')  %]
+[% label('Address:', venue.address) %]
+[% label('Website', venue.url, 'url') %]
+
+
+<h2>Upcoming Events</h2>
+[% IF events.count %]
+	<ul>
+	[% FOREACH ev IN events %]		
+		<li>[% event.start_time %] - 
+			<a href="[% c.uri_for('/events/detail/' _ event.event_id) %]">[% event.name %]</a></li>
+	[% END %]
+	</ul>
+[% ELSE %]
+	Nothing scheduled.
+[% END %]
+
+
+<br />
+<br />	
+	<!-- TODO: embed google map -->
+
+<div id="venue_map"></div>
+<script>
+
+	var myOptions = 
+		{ center: new google.maps.LatLng([% venue.lat %], [% venue.long %]),
+	      zoom: 13,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	gmap = new google.maps.Map(document.getElementById("venue_map"), myOptions);
+	geocoder = new google.maps.Geocoder();
+
+	this.placeMarker(new google.maps.LatLng([% venue.lat %], [% venue.long %]), gmap,
+				'[% venue.name %]', 
+				'test 1 2'
+	);
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	// Make the info window close when clicking anywhere on the map.
+    google.maps.event.addListener(gmap, 'click', closeInfoWindow);
+</script>
+
+
+</div>

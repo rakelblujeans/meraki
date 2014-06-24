@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>DanceParty NYC!</title>
+    <link rel="stylesheet" href="[% c.uri_for('/static/css/main.css') %]" />
+	<link rel="stylesheet" href="[% c.uri_for('/static/anytime/anytime.c.css') %]" />
+	<script src="[% c.uri_for('/static/js/jquery-1.7.2.min.js') %]"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAqdnKiE3Z48MosGNE015UlO4kjg23dKf4&sensor=false"></script>
+	<script src="[% c.uri_for('/static/anytime/anytime.c.js') %]"></script>
+    <script src="[% c.uri_for('/static/js/app.js') %]"></script>
+	<script src="[% c.uri_for('/static/js/modernizr.js') %]"></script>
+
+	<!-- Fix HTML5 rendering in IE -->
+	<!--[if IE]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<script>
+	function initialize() {
+		$.ajaxSetup({ cache: false });
+		[% IF login_form_error_msg %]
+			//console.log('GOT ERROR');
+			var form_error_msg = [% login_form_error_msg %];
+			for (var key in form_error_msg) {
+				//console.log(key);
+				parseErrorMessage(key, form_error_msg[key]);
+			}
+			showLogin();
+		[% END %]
+	}
+	window.onload=initialize;
+
+	$.ajaxSetup({ cache: false });
+
+	function requestLogin() {
+	FB.login(function(response) {
+        if (response.authResponse) {
+            // connected
+        	FB.api('/me', function(response2) {
+	        	$.ajax({
+	        		type: 'POST',
+				  	url: 'https://graph.facebook.com/oauth/access_token',
+				  	data: { 
+				    	grant_type: "fb_exchange_token",
+				    	client_id: "[% fb_app_id %]",
+				    	client_secret: "[% fb_secret %]",
+				    	fb_exchange_token: response.authResponse.accessToken,
+				  	},
+				  	success: function(data) {
+				    	// Exchange was successful, long lived access token is included in data and should be stored
+			        	self.location = "[% c.uri_for('/auth/facebook_is_authed') %]" +
+		        			"?user_id="+ response.authResponse.userID + "&" +data;
+				  	}
+				});
+
+   			});
+        } else {
+            // cancelled
+            $('#fb_name').html("");
+        }
+    }, {scope: 'create_event,rsvp_event,user_events,publish_actions,email'});
+	}
+
+	</script>
+  </head>
+  <body>
+	<div id="fb-root"></div>
+	<script>
+	
+		window.fbAsyncInit = function() {
+	    FB.init({
+	       appId     : '[% fb_app_id %]',	
+	      //channelUrl : 'dancepartynyc/channel.html', // Channel File
+	      status     : true, // check login status
+	      cookie     : true, // enable cookies to allow the server to access the session
+	      xfbml      : true  // parse XFBML
+	    });
+	    FB.Event.subscribe('auth.login', function(response) {
+	  		window.location.reload();
+    	});
+  
+	
+	   	FB.getLoginStatus(function(response) {
+	  	if (response.status === 'connected') {
+		    // the user is logged in and has authenticated your
+		    // app, and response.authResponse supplies
+		    // the user's ID, a valid access token, a signed
+		    // request, and the time the access token 
+		    // and signed request each expire
+		    //var uid = response.authResponse.userID;
+		    //var accessToken = response.authResponse.accessToken;
+			//console.log('connected');
+			testAPI(response.authResponse);
+			// mark as logged in
+		  } else if (response.status === 'not_authorized') {
+			//console.log('not authorized!');
+		    // the user is logged in to Facebook, 
+		    // but has not authenticated your app
+			//login();
+		  } else {
+			//console.log("user isn't logged in");
+		    // the user isn't logged in to Facebook.
+			//login();
+		  }
+	 	});
+	};
+
+		// Load the SDK Asynchronously
+  	(function(d){
+    	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    	if (d.getElementById(id)) {return;}
+    	js = d.createElement('script'); js.id = id; js.async = true;
+    	js.src = "//connect.facebook.net/en_US/all.js";
+    	ref.parentNode.insertBefore(js, ref);
+    }(document));
+	</script>
+		
+    <header id="header">
+      <div id="logo"><a href="[% c.uri_for("/map") %]">DanceParty NYC</a></div>
+		
+	<a class="social_links" href="https://www.facebook.com/danceparty"><img src="static/images/fb.gif" /></a>
+	<a  class="social_links" href="https://twitter.com/rboojee"><img src="static/images/twitter.gif" /></a>
+
+	<div id="search_form">
+	  <form id="do_search" action="[% c.uri_for('/map') %]" METHOD="POST">
+	    <input type="search" placeholder="Search event listings..." name="search_terms" onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search event listings...';}" size="50" />
+	    <input type="hidden" name="submit"value="Search" />
+	  </form>
+	</div>
+
+	[% INCLUDE menu.tt2 %]
+
+    </header>
+
+   	<section id="content">
+      [%# Status and error messages %]
+      <span id="message"><h3>[% status_msg || c.flash.status_msg %]</h3></span>
+      <span class="error">
+      	[% FOREACH msg IN error_msg %]
+      		<h3>[% msg %]</h3>
+      	[% END %]
+      </span>
+
+      [%# This is where TT will stick all of your template's contents. -%]
+      [% content %]
+    </section>
+
+	<footer>
+		<!--<fb:activity site="http:/www.danceparty.com/" app_id="[% fb_app_id %]">
+		</fb:activity>
+		
+		<div id="twitter">
+		<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+		<script>
+		new TWTR.Widget({
+		  version: 2,
+		  type: 'list',
+		  rpp: 30,
+		  interval: 30000,
+		  title: 'Shots heard around the world',
+		  subject: 'Tropical Bass',
+		  width: 250,
+		  height: 300,
+		  theme: {
+		    shell: {
+		      background: '#ff96e7',
+		      color: '#ffffff'
+		    },
+		    tweets: {
+		      background: '#ffffff',
+		      color: '#444444',
+		      links: '#b740c2'
+		    }
+		  },
+		  features: {
+		    scrollbar: true,
+		    loop: false,
+		    live: true,
+		    behavior: 'all'
+		  }
+		}).render().setList('rboojee', 'music').start();
+		</script>
+		</div><!-- end twitter -->
+
+	</footer>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+[% IF events.size > 0 %]
+	<p>Click on an event or venue name to update it or view more info.</p>
+	<p><a href="[% c.uri_for('/events/add') %]">Add a new event</a></p>
+
+	<form>
+	<input type="checkbox" name="selectall" value="Select All" onclick="selectAll();">
+	<input type="submit" value="Share on Facebook" />
+	<input type="submit" value="Delete" />
+	<table>
+	<tr>
+		<td></td>
+		<td>Name</td>
+		<td>Date</td>
+		<td>Venue</td>
+		<td>Visibility</td>
+		<td>On Facebook?</td>
+		<td>Actions</td>
+	</tr>
+
+	[% FOREACH event IN events %]
+	<tr>
+		<td><input type="checkbox" name="selected" value="[% event.event_id%]" /></td>
+		<td>[% event.name %]</td>
+		<td>[% event.start_time %]</td>
+		<td>[% event.location %]</td>
+		<td>[% event.privacy %]</td>
+		<td>[% event.on_facebook %]</td>
+		<td>
+			<a href="[% c.uri_for('/events/edit/' _ event.event_id ) %]">Edit</a>
+			<a href="[% c.uri_for('/events/delete/' _ event.event_id ) %]">Delete</a>
+		</td>
+	</tr>
+	[% END %]
+	</table>
+	</form>
+
+[% ELSE %]
+	No events listed. Why don't you <a href="[% c.uri_for('/map') %]">add one</a>?
+[% END %]

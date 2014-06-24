@@ -1,0 +1,36 @@
+[% MACRO textfield(form, field_name, input_val, input_type, autofocus) BLOCK %]
+	[% f = form.field(field_name) %]
+	[% IF !input_type; input_type = 'text'; END %]
+	<div class="add_info">
+		<label for="[% f.name %]" class="form_label">[% f.label %]:[% IF f.required; '*'; END %]</label>
+		<input type="[% input_type %]" name="[% f.name %]" id="[% f.name %]"
+		size="50" 
+		value="[% IF f.value != ''; f.value ; ELSE; input_val; END %]" 
+			[% IF autofocus; ' autofocus'; END %] 
+			[% IF f.required; ' required'; END %] />
+	</div>
+[% END %]
+
+[% MACRO selectfield(form, field_name, input_val, autofocus) BLOCK %]
+	[% f = form.field(field_name) %]
+	<div class="add_info">
+		<label for="[% f.name %]" class="form_label">[% f.label %]:[% IF f.required; '*'; END %]</label>
+		<select name="[% f.name %]" id="[% f.name %]" [% IF f.required; ' required'; END %] [% IF autofocus; ' autofocus'; END %] >
+			[% FOR option IN f.options %]
+			<option value="[% option.value %]"
+		         [% FOREACH selval IN f.fif %]
+		             [% IF option.value == selval %]selected="selected"
+		             [% ELSIF option.value == input_val %]selected="selected"
+		             [% END %]
+		         [% END %]>
+		       [% option.label | html %]</option>
+			[% END %]
+		</select>
+	</div>
+[% END %]
+
+[% MACRO label(field_name, val) BLOCK %]
+	<div id="field_label">[% field_name %]</div>
+	<div id="field_val">[% val %]</div>
+<br />
+[% END %]

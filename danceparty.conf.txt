@@ -1,0 +1,61 @@
+<Plugin::Static::Simple>
+    no_logs   1
+    include_path   [ /Users/raquelbujans/Code/DanceParty/root ]
+    ignore_extensions   tmpl
+    ignore_extensions   tt
+    ignore_extensions   tt2
+    ignore_extensions   html
+    ignore_extensions   xhtml
+    mime_types_obj   MIME::Types=HASH(0x7ffabf0596a8)
+    <mime_types>
+    </mime_types>
+    debug   1
+</Plugin::Static::Simple>
+disable_component_resolution_regex_fallback   1
+<Plugin::ConfigLoader>
+</Plugin::ConfigLoader>
+name   DanceParty
+<Plugin::Session>
+    verify_address   0
+    cookie_name   danceparty_session
+    verify_user_agent   0
+    expires   7200
+</Plugin::Session>
+<Model::DB>
+    schema_class   DanceParty::Schema
+    connect_info   dbi:mysql:dbname=danceparty2;host=mysql.complexconjugate.com
+    connect_info   raquelbujans
+    connect_info   kermitLovesYou
+    <connect_info>
+        AutoCommit   1
+    </connect_info>
+</Model::DB>
+<stacktrace>
+    verbose   0
+    context   3
+</stacktrace>
+<Plugin::Authentication>
+    use_session   1
+    <default>
+        password_type   self_check
+        role_field   role_name
+        user_model   DB::UserAccount
+        class   SimpleDB
+        role_relation   roles
+    </default>
+</Plugin::Authentication>
+<View::HTML>
+    INCLUDE_PATH   /Users/raquelbujans/Code/DanceParty/root/src
+</View::HTML>
+<View::JSON>
+    allow_callback 1
+</View::JSON>
+<Model::DBIC>
+</Model::DBIC>
+enable_catalyst_header   1
+root   /Users/raquelbujans/Code/DanceParty/root
+home   /Users/raquelbujans/Code/DanceParty
+<Facebook>
+    app_id 110620602431278
+    secret f8536195a0625923d4750db09d3fd299
+</Facebook>

@@ -1,0 +1,23 @@
+[% PROCESS macros.tt2 %]
+<div id="event_form">
+
+<form id="add_event2" action="[% submit_action %]" METHOD="POST" >
+	[% textfield(event_form, 'sync_to_fb', '0', 'checkbox') %]
+	[% textfield(event_form, 'event_name', event.name || event_name, 'text', 1) %]
+	[% selectfield(event_form, 'location_id', event.location_id || location_id) %]	
+	[% textfield(event_form, 'organizer_name', event.organizer_name || organizer_name) %]
+	[% textfield(event_form, 'email', event.email || email, 'email') %]
+	[% textfield(event_form, 'music_genre', event.music_genre || music_genre) %]
+	[% textfield(event_form, 'artists', event.artists || artists) %]
+	[% textfield(event_form, 'start_day', event.start_day || start_day, 'date') %]
+	[% textfield(event_form, 'start_time', event.start_time || start_time, 'datetime') %]
+	[% textfield(event_form, 'more_info', event.more_info || more_info ) %]
+	[% textfield(event_form, 'tickets_url', event.tickets_url || tickets_url, 'url') %]
+	[% textfield(event_form, 'ticket_price', event.ticket_price || ticket_price) %]
+	[% textfield(event_form, 'youtube_url', event.youtube_url || youtube_url) %]
+	[% textfield(event_form, 'additional_description', event.additional_description || additional_description) %]
+	[% selectfield(event_form, 'privacy', event.privacy || privacy) %]
+	
+	<input type="submit">
+</form>
+</div><!-- event form -->

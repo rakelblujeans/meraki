@@ -1,0 +1,105 @@
+[% IF events.size > 0 %]
+	<p>Click on an event or venue name to update it or view more info.</p>
+	[% IF showing_upcoming == 1 %]
+		<p>View <a href="[% c.uri_for('/events/past') %]"">past events</a></p>
+	[% ELSE %]
+		<p>View <a href="[% c.uri_for('/events') %]"">upcoming events</a></p>
+	[% END %]
+
+	<p><a href="[% c.uri_for('/events/add') %]">Add a new event</a></p>
+
+	[% IF prev_page %]
+	<a href="[% c.uri_for('/events', , { page => prev_page }) %]">prev</a>
+	[% END %]
+	[% IF next_page %]
+	<a href="[% c.uri_for('/events', , { page => next_page }) %]">next</a>
+	[% END %]
+
+	[% is_authorized = event.is_creator || c.user.is_admin %]
+	[% IF is_authorized %]
+	<form id="events_form" METHOD="POST" >
+
+	<input type="checkbox" name="selectall" onclick="toggleChecked(this.checked)">Select / Deselect all</input>
+	<input type="submit" name="fb_submit" value="Share on Facebook" />
+	<input type="submit" name="fb_remove" value="Remove from Facebook" />
+	<input type="submit" name="sync_all" value="Sync to all" />
+	<input type="submit" name="delete_submit" value="Cancel" />
+	[% END %]
+
+	<table>
+	<tr>
+
+		[% IF is_authorized %]
+			<td></td>
+		[% END %]
+		<td>Name</td>
+		<td>Date</td>
+		<td>Venue</td>
+
+		[% IF is_authorized %]
+			<td>Visibility</td>
+			<td>On Facebook?</td>
+		[% END %]
+		<td>Actions</td>
+	</tr>
+
+	[% FOREACH event IN events %]
+	<tr>
+		[% IF is_authorized %]
+			<td><input type="checkbox" class="checkbox" name="selected" value="[% event.event_id%]" /></td>
+		[% END %]
+		<td>
+		<a href="[% c.uri_for('/events/detail/' _ event.event_id) %]">[% event.name %]</a>
+		</td>
+		<td>[% event.start_time %]</td>
+		<td>[% event.location %]</td>
+
+		[% IF is_authorized %]
+			<td>[% event.privacy %]</td>
+			<td>[% event.on_facebook %]</td>
+		[% END %]
+		<td>
+			[% IF is_authorized %]
+				<a href="[% c.uri_for('/events/edit/' _ event.event_id ) %]">Edit</a>
+				<a href="[% c.uri_for('/events/delete/' _ event.event_id ) %]">Cancel</a>
+				<a href="[% c.uri_for('/events/fbpost/' _ event.event_id ) %]">Post on FB</a>
+				[% is_on_fb = event.on_facebook == 'Yes' %]
+				[% IF is_on_fb %]
+					<a href="[% c.uri_for('/events/fbremove/' _ event.event_id ) %]">Remove from FB</a> 
+				[% END %]
+			[% END %]
+			[% IF is_on_fb %]
+				<a href="http://www.facebook.com/[% event.fb_id %]">View on FB</a>
+			[% END %]
+			<a href="[% c.uri_for('/map', , { location_id => event.location_id }) %]">Map</a>
+		</td>
+	</tr>
+	[% END %]
+	</table>
+	[% IF is_authorized %]</form>[% END %]
+
+[% ELSE %]
+	No events listed. [% IF c.user.is_admin %] Why don't you <a href="[% c.uri_for('/events/add') %]">add one</a>? [% END %]
+	<p>View <a href="[% c.uri_for('/events/past') %]"">past events</a></p>
+[% END %]
+
+<script>
+	$("#events_form").find(":submit").click(function(event) {
+		// get some values from elements on the page:
+	    var the_form = jQuery(this).parents("form");
+	    var data = the_form.serialize();
+	    var button = event.target;
+
+	    if (button.name == "delete_submit") {
+		    the_form.get(0).setAttribute('action', '[% c.uri_for("/events/delete_multiple") %]');
+		 } else if (button.name == "fb_submit"){
+			 the_form.get(0).setAttribute('action', '[% c.uri_for("/events/fbpost_multiple") %]');
+		 } else if (button.name == "fb_remove"){
+			the_form.get(0).setAttribute('action', '[% c.uri_for("/events/fbremove_multiple") %]');
+		 } else {
+		 	 the_form.get(0).setAttribute('action', '[% c.uri_for("/events/sync_all") %]');
+		 }
+	    return true;
+	});
+
+</script>

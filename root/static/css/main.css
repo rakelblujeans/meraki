@@ -1,0 +1,131 @@
+#message {
+    color: #00ccff;
+}
+.error {
+    color:red;
+    font-weight:bold
+}
+html { 
+    height: 100%;
+    width: 100%;
+}
+body { 
+    height: 100%;
+    width: 100%; 
+    margin: 0; padding: 0;
+    background-color: grey;
+    color: white;
+    font: normal 100%;
+}
+
+img, embed, object, video {
+    max-width: 100%;
+}
+
+.feature { overflow: hidden;
+}
+.feature img { display: block; max-width: auto;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+#logo {
+    float: left;
+    font-size:xx-large;
+}
+
+#menu a:link {
+    text-decoration:none;
+    color: white;
+}
+#menu a:visited {
+    text-decoration:none;
+    color: white;
+}
+#menu a:hover {
+    text-decoration:underline;
+    color: white;
+}
+#menu a:active {
+    text-decoration:underline;
+    color: white;
+}
+
+#menu {
+    float: right;
+    //margin-right: 10px;
+    margin-right: 1.25em;
+}
+
+#auth-loggedin {
+    float:right;
+}
+
+#search_form {
+    float: right;
+    //margin-right: 10px;
+    margin-right: 1.25em;
+}
+
+#content {
+//    clear: both;
+}
+
+.ui-tabs .ui-tabs-hide {
+    position: absolute;
+    left: -10000px;
+}
+
+#map_canvas { 
+    clear: both;
+    float:left;
+    height: 720px; //90%;
+    width: 960px; //75%;
+    color: black;
+}
+
+#venue_map { 
+    height: 300px;
+    width: 300px;
+    color: black;
+}
+
+
+div.add_info {
+    width: 300px;
+}
+
+label.form_label {
+    width: 150px;
+}
+
+#events_listing {
+    float: right;
+//    margin-right: 30px;
+    margin: 0 auto;
+}
+
+footer {
+    clear: both;
+}
+
+#fb_like {
+//    float: left;
+}
+
+#twitter {
+    float: left;
+}
+
+.fb-activity {
+    float: left;
+}
+
+#show_login {
+    display: none;    
+}
+
+#show_registration {
+    display: none;    
+}

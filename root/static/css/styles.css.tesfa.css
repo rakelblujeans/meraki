@@ -1,0 +1,408 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* BODY  Loads global text colors, background styling, position */
+body{
+		background: #000;
+/* Remove the slash and asterick to activate  background image and then replace astericsk and slash on above background line: 
+		background: url("/images/background.jpg"); */
+		background-position:top;
+		background-attachment:fixed; /* makes background not move */
+		color: #FFF; /* Sites global color */
+		text-align:left;
+		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#111128', EndColorStr='#222236'); /*i.e. fixes for background */
+}
+		
+/* TEXT STYLING */
+
+p{font-family: "Verdana", Geneva, sans-serif; /*site font */}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {color: #2CF; margin: 0 1px 0 1px;padding: 2px;}
+h1 {
+	font-family: "Verdana", Geneva, sans-serif;
+	font-size: 164%;
+	font-weight: normal;
+	line-height: 170%;
+	margin: 0 0 30px;
+	padding: 5px 0 0;
+	text-transform: uppercase;
+	text-shadow: 1px 1px #003;
+}
+h2 {font-size: 18px;line-height: 24px; padding: 20px 0 0;}
+h3 {font-size: 15px;}
+h4 {font-size: 13px;text-transform: uppercase;}
+h5 {font-size: 12px;text-transform: uppercase;}
+h6 {font-size: 11px; text-transform: uppercase;}
+h1 a, h2 a, h3 a,h4 a,h5 a,h6 a {color: #F00;text-decoration: none;}
+h1 a:hover, h1 a:focus, h2 a:hover, h2 a:focus, h3 a:hover, h3 a:focus, h4 a:hover,h4 a:focus,h5 a:hover,h5 a:focus,h6 a:hover, h6 a:focus {color: #FF0;}
+		
+/* Links*/
+
+a {
+  color: #39F;
+  text-decoration: underline;
+}
+
+a:active {
+ 	color: #6FF;
+}
+
+a:hover,
+a:active {
+	outline: none;
+}
+
+/* Paragraphs and other miscellaneous text formatting */
+blockquote {
+	color: #999;
+	padding: 0 35px;
+	margin: 0 0 20px;
+}
+		
+/* This manages the position and visibility of ENTIRE site */		
+#site-wrap{
+		width: 1060px;
+		min-width: 960px;
+		position:absolute; /*makes position stay where it is no matter how the browser size is shrunk, maximized etc */
+		margin: 0 4px auto; /* auto tells it to adjust automatically as this site is left aligned */
+}
+
+/* POP UP BOX */
+
+#pop_header{
+		width: 100%;
+		margin: auto auto auto auto; /* all auto centers the pop up box */
+		padding: 6px;
+		position: absolute;
+}
+
+#pop_logo{
+		margin: 0 auto auto 0;
+		position: absolute;
+		float: top;
+		padding: 2px;
+}
+		
+/* HEADER AREA This is your header code, all your GLOBAL site options are here, it has your logo/homebutton, main menu, social  icons and site search bar, stuff you want on every page/post that loads */
+#header{
+		top: 0px;
+		width: 1060px;
+		min-width: 960px;
+		max-width: 1160px;
+		height: 120px;
+		min-height: 80px;
+		max-height: 120px;
+		margin: 0 0 0 0;
+		padding: 2px;
+		position: fixed; /* makes the header not move */
+		z-index: 10000;
+		background: grey;
+		/*overflow: hidden;*/
+}
+
+/* LOGO WRAPPER*/	
+#logowrapper{
+		margin: 2px;
+		float: left;
+		padding: 1px;
+		width: 296px;
+		min-width: 290px;
+		max-width: 360px;
+		height: 86px;
+		min-height: 80px;
+		max-height: 88px;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+		z-index: 1000;
+}
+#logo{
+		width:240px;
+		height: 48px;
+		margin: 2px;
+		padding: 1px;
+		overflow: hidden;/* hidden hides anything outside of the set margin and size of the logo div, auto will add a scroll bar, visible will show the contents our side the set margins and size paramters */
+		display: block;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+}
+#logo image{
+		width:100%;
+		position: relative;
+		z-index: 1000;
+}
+#site-description{
+		width:100%;
+		height:1.2em;
+		padding: 2px;
+		color:#F00;
+		font-style:italic;
+		z-index: 200;
+}
+/*SOCIAL LINKS BUTTONS in header*/
+#socialinks{
+		width: auto;
+		height: 1.2em;
+		position: absolute;
+		margin: 2px 2px 2px 2px;
+		padding: 2px;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+}
+/* MENU SEARCH WRAP */
+#menuwrapper{
+		padding: 1px;
+		width: 720px;
+		float: right;
+		right: -4px;
+		position: absolute;
+		min-width: 700px;
+		max-width: 860px;
+		height: 1.8em;
+		min-height: 2.0em;
+		max-height: 3.6em;
+		background: rgba(112,122,322,0.9);
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+		z-index:400;
+		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#4c4c9a', EndColorStr='#252978'); /*i.e. fixes for background */
+}
+/* MAIN MENU */
+#mainmenu{
+		top: 0px;
+		width: 400px;
+		min-width: 380px;
+		max-width: 420px;
+		background: rgba(2,22,122,0.8);
+		height: 1.2em;
+		float: right;
+		margin: 1px 1px 1px 1px;
+		position: absolute; /* makes menu keep position with header, relative to header size */
+		padding: 2px;
+		display: inline; /* makes horizonal ul list */
+		color: #3355DF;	
+		-moz-box-shadow: 1px 1px #222;
+		-webkit-box-shadow: 1px 1px 2px #222;
+		box-shadow: 1px 1px 2px #222;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+		z-index: 750;
+}
+/* SEARCH */
+#search_form{
+		width: 300px;
+		min-width: 280px;
+		max-width: 300px;
+		height: 1.2 em;
+		color: #3355DF;
+		background: rgba(12,2,22,0.9);
+		-moz-box-shadow: 1px 1px #222;
+		-webkit-box-shadow: 1px 1px #222;
+		box-shadow: 1px 1px #222;
+		color: #99f;
+		cursor: hand;
+		height: 1.05em;
+		margin: 2px;
+		opacity: 1.0;
+		padding: 2px;
+		float: right;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+		z-index: 1000px;
+}
+
+/* ALL SITE CONTENT everything between the header footer, so your maps, your sign up pages, your articles, any page or post  dependent media and plug in tools , note the second menu is positioned here as its a page dependent tool*/
+/* MAIN CONTENT WRAP */
+#contents-wrap{
+			color: #C9F;
+		min-width: 960px;
+		width: 1060px;
+		max-width: 1160px;
+		height: 720px;
+		margin: 126px 4px 2px 2px;
+		left: 4px;
+		padding: 3px;
+		z-index: 10;
+			background: rgba(333,2,22,0.7);
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+		z-index: 10;
+		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#4c4c9a', EndColorStr='#252978'); /*i.e. fixes for background */
+}
+/* CONTENT */
+#contents{
+		width: 1060px;
+		height: 330px;
+		margin: 0 0 0 0;
+		padding: 1px;
+		z-index: 10;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+}
+/* MAP SEARCH */
+#mapsearch{
+		width: auto;
+		height: 1.2 em;
+		margin: 2px 4px 2px 2px;
+		position: relative;
+		float:left;
+		padding: 2px;
+		color: #3355DF;
+		background: rgba(44,44,44,0.8);
+		border-radius: 5px;
+		-moz-box-shadow: 1px 1px #000;
+		-webkit-box-shadow: 1px 1px #000;
+		box-shadow: 1px 1px rgba(44,44,44,0.8);
+		color: #99f;
+		cursor: hand;
+		opacity: 0.7;
+}
+/* SECOND MENU */
+#secondmenu{
+		width: 600px;
+		height: 1.2 em;
+		padding: 2px;
+		display:block; /* makes a vertical UL list, list style is required, especially for drop down capable listing */
+		list-style: none;
+		list-style-image:inherit;
+		list-style-position:inherit;
+		list-style-type: lower-latin;
+		color: #3355DF;
+		text-shadow: 0px 1px #F00;
+		margin: 2px 4px 2px 2px;
+		float:right;
+		background: rgba(44,44,44,0.8);
+		border-radius: 5px;
+		-moz-box-shadow: 1px 1px #000;
+		-webkit-box-shadow: 1px 1px #000;
+		box-shadow: 1px 1px rgba(44,44,44,0.8);
+		cursor: hand;
+		position:relative; /* makes menu keep position with header, relative to header size */
+}
+/*SOCIAL FEED from Twitter FB G+*/
+#socialbox{
+		width: 318px;
+		height: 280px;
+		padding: 1px;
+		color: #3355DF;	
+		background: rgba('333,111,111,0.0');
+		z-index: 200;
+		overflow: auto;
+		float: right;
+		position: relative;
+		margin: 40px 4px 4px auto;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+}
+/*MAP*/
+#map_canvas{
+		width:auto;
+		min-width: 960px;
+		max-width: 1160px;
+		margin: 1.8em 0 0 0;
+		height: 330px;
+		overflow:hidden;
+		padding: 2px;
+		color: #3355DF;	
+		z-index:100;
+		position: absolute;
+		float: left;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+}
+/* Top 5 Posts news etc */
+#events_listing{
+	width: 937px;
+	margin: 22px auto 1px auto;
+	height: 311px;
+	padding: 2px;
+	color: #3355DF;
+	z-index: 1000;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	left: 4px;
+	top: 0px;
+}
+/* Top 5 Nav/ Slider/Media Nav for previous, next, left right elements */
+#leftprevious{
+	float: left;
+	position:relative;
+	left: 2px;
+	height: 33px;
+	width: auto;	
+	margin-top: 60px;
+	margin-bottom: auto;
+	z-index: 800;
+}
+.left{
+		float: left;
+		position:absolute;
+		left: 2px;
+}
+#rightnext{
+	float: right;
+	position:relative;
+	right: 2px;
+	height: 33px;
+	width: auto;
+	margin-top: 60px;
+	margin-bottom: auto;
+	z-index: 800;
+} 
+.right{
+		float: right;
+		position:absolute;
+		right: 2px;
+}
+/* FOOTER */
+#footer{
+		clear:both;
+		width: 1060px;
+		min-width: 960px;
+		max-width: 1160px:
+		height: 4.4em;
+		margin: 10px 1px 1px 1px;
+		padding: 2px;
+		color: #3355DF;
+		position: relative;
+		z-index: 10;
+		overflow: hidden;
+		background: rgba(122,211,322,0.8);
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-ms-border-radius: 5px;
+				filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#4c4c9a', EndColorStr='#252978'); /*i.e. fixes for background */
+}
+
+
+
+
+#show_login {
+    display: none;    
+}
+
+#show_registration {
+    display: none;    
+}

@@ -1,0 +1,50 @@
+[% IF !c.user_exists %]
+<div id="auth-loggedout">
+	<a href="#" onClick="showRegistration()">signup</a>
+	<a href="#" onClick="showLogin()">login</a>
+	<div id="fb_name"><!--Easily login or signup with Facebook!--></div>
+
+	<div id="show_registration">
+		<iframe src="https://www.facebook.com/plugins/registration?
+	            client_id=[% fb_app_id %]&
+	            redirect_uri=[% c.uri_for('/auth/registration') %]&
+	            fields=name,location,email,password"
+	        scrolling="auto"
+	        frameborder="no"
+	        style="border:none"
+	        allowTransparency="true"
+	        width="400"
+	        height="400">
+		</iframe>
+	</div>
+
+	<div id="show_login">
+		<a href="#fblogin" onClick="requestLogin()"> Login with Facebook</a>
+		<!-- fb:login-button perms="create_event, rsvp_event, user_events, publish_actions,email">Login</fb:login-button -->
+	
+		<div id="show_our_login">
+			<form id="login_form" method="POST" action="[% c.uri_for('/auth/login') %]">
+			<table>
+	    		<tr>
+	        		<td>Username:</td>
+	          		<td><input type="text" id="username" name="username" size="40" value="[% username %]" /></td>
+	        	</tr>
+	        	<tr>
+	        		<td>Password:</td>
+	          		<td><input type="password" id="password" name="password" size="40" /></td>
+	        	</tr>
+	        	<tr>
+	          		<td colspan="2"><input type="submit" name="submit" value="Login" /></td>
+	        	</tr>
+			</table>
+			</form>
+		</div>
+	</div>
+</div>
+
+[% ELSE %]
+	<div id="auth-loggedin">
+  		<p><div id="auth-displayname">Hi [% c.user.username %]!</div>(<a href="[% c.uri_for('/auth/logout') %]" id="auth-logoutlink">logout</a>)</p>
+	</div>
+	
+[% END %]

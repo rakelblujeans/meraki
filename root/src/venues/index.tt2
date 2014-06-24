@@ -1,0 +1,81 @@
+[% is_authorized = venue.is_creator || c.user.is_admin %]
+
+[% IF venues.size > 0 %]
+	<p>Click on an event or venue name to update it or view more info.</p>
+[% IF is_authorized %]
+	<p><a href="[% c.uri_for('/venues/add') %]">Add a new venue</a></p>
+[% END %]
+	<p>
+	[% IF prev_page %]
+	<a href="[% c.uri_for('/venues', , { page => prev_page }) %]">prev</a>
+	[% END %]
+	[% IF next_page %]
+	<a href="[% c.uri_for('/venues', , { page => next_page }) %]">next</a>
+	[% END %]
+	</p>
+
+	[% IF is_authorized %]
+	<form METHOD="POST" action="[% c.uri_for('/venues/delete_multiple', , { page => current_page }) %]">
+	<input type="checkbox" name="selectall" onclick="toggleChecked(this.checked)">Select / Deselect All</input>
+	<input type="submit" name="delete" value="Delete" />
+	[% END %]
+
+	<table>
+	<tr>
+		[% IF is_authorized %]
+			<td></td>
+		[% END %]
+		<td>Name</td>
+		<td>Address</td>
+		<td>Phone</td>
+		<td>Category</td>
+		<td>Upcoming Events</td>
+
+		[% IF is_authorized %]
+			<td>Actions</td>
+		[% END %]
+	</tr>
+
+	[% FOREACH venue IN venues %]
+	<tr>
+		[% IF is_authorized %]
+			<td><input type="checkbox" name="selected" value="[% venue.location_id %]" /></td>
+		[% END %]
+
+		<td><a href="[% c.uri_for('/venues/detail/' _ venue.location_id) %]">[% venue.name %]</a></td>
+		<td>[% venue.address %]</td>
+		<td>[% venue.phone %]</td>
+		<td>[% venue.category %]</td>
+		<td>
+		[% IF venue.num_events == 0 %]
+			[% venue.num_events %]
+		[% ELSE %]
+			<a href="[% c.uri_for('/venues/events/' _ venue.location_id _ '/future') %]">[% venue.num_events %]</a>
+		[% END %]
+		</td>
+
+		[% IF is_authorized %]
+		<td><a href="[% c.uri_for('/venues/delete/' _ venue.location_id, , { page => current_page }) %]">Delete</a> 
+			<a href="[% c.uri_for('/venues/edit/' _ venue.location_id, , { page => current_page }) %]">Edit</a>
+			<a href="[% c.uri_for('/events/add', , { location_id => venue.location_id,
+													 page     => current_page }) %]">Create event</a>
+		</td>
+		[% END %]
+	</tr>
+	[% END %]
+	</table>
+
+	[% IF is_authorized %]
+		</form>
+	[% END %]
+	<p>
+	[% IF prev_page %]
+	<a href="[% c.uri_for('/venues', , { page => prev_page }) %]">prev</a>
+	[% END %]
+	[% IF next_page %]
+	<a href="[% c.uri_for('/venues', , { page => next_page }) %]">next</a>
+	[% END %]
+	</p>
+[% ELSE %]
+	No venues listed. Why don't you <a href="#">add one</a>?
+[% END %]

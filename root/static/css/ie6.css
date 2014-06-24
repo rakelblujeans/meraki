@@ -1,0 +1,11 @@
+img, embed, object, video {
+    width: 100%;
+}
+
+img.full, object.full, .main img, .main object {
+    width: 100%;
+}
+
+.logo { background: none; filter: progid:DXImageTransform.Microsoft. »
+AlphaImageLoader(src="/path/to/logo.png", » sizingMethod="scale");
+}

@@ -1,0 +1,7 @@
+# All MyApp loggers opened up for DEBUG and above
+log4perl.logger.MyApp = DEBUG, Screen
+
+log4perl.appender.Screen          = Log::Log4perl::Appender::Screen
+log4perl.appender.Screen.stderr   = 0
+log4perl.appender.Screen.layout   = PatternLayout
+log4perl.appender.Screen.layout.ConversionPattern = %d> %m%

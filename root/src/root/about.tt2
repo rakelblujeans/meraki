@@ -1,0 +1,26 @@
+<section>
+We're sick and tired of wading through event listings just to find a
+handful of awesome parties.  We want to identify and support the people 
+throwing parties we love.  Out of that love, 
+
+<div itemscope itemtype="http://microformats.org/profile/hcard" id="about" class="vcard">
+ <a itemprop="fn org url" rel="me" href="www.danceparty.org">DancePartyNYC</a> was born.
+
+To view a list of our most frequent haunts, check <a href="http://bit.ly/KybRzS" target="_blank">this out</a>.
+
+<p>If you want to get your events listed, contact us here:</p>
+<ul>
+ <li><span itemprop="email">dancepartynyc -at- gmail -dot- com</span></li>
+ <li><a itemprop="url" href="www.twitter/dancepartynyc" ref="me">Twitter</a></li>
+</ul>
+ Located in the greatest borough of all time - 
+<span itemprop="adr" itemscope>
+  <span itemprop="locality">Brooklyn</span>, 
+  <span itemprop="region">New York</span>.
+ </span>
+
+</div>
+
+
+
+</section><!-- end about -->

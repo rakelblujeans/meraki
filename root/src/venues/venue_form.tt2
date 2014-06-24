@@ -1,0 +1,11 @@
+[% PROCESS macros.tt2 %]
+<div id="venue_form">
+<form id="add_venue" action="[% submit_action %]" METHOD="POST">
+	[% textfield(venue_form, 'location_name', venue.name, 'text', 1) %]
+	[% selectfield(venue_form, 'location_type_id', venue.location_type_id) %]
+	[% textfield(venue_form, 'phone', venue.phone, 'tel')  %]
+	[% textfield(venue_form, 'address', venue.address) %]
+	[% textfield(venue_form, 'url', venue.url, 'url') %]
+	<input type="submit">
+</form>
+</div>

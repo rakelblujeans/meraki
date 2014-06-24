@@ -1,0 +1,13 @@
+
+
+<nav id="menu">
+	<p>[% INCLUDE login.tt2 %]</p><br /><br />
+	<p>
+		<a href="[% c.uri_for('/about') %]">About</a> 
+[% IF c.user_exists %]
+  		<a href="[% c.uri_for('/events') %]">Events</a> 
+  		<a href="[% c.uri_for('/venues') %]">Venues</a> 
+[% END %]
+	</p>
+</div>
+

@@ -1,0 +1,50 @@
+<div id="map">
+<div id="address">
+	<form id="addressForm" action="#" onsubmit="showAddress(this.address.value); return false">
+		<input type="text" id="address" placeholder="search map.." />
+		<input type="submit" value="Go" />
+	</form>
+</div>
+<div id="map_canvas"></div>
+
+<div id="events_listing">
+
+	<div id="gcal_listing">
+Add our entire <a href="http://www.google.com/calendar/render?cid=https%3A%2F%2Fwww.google.com%2Fcalendar%2Ffeeds%2F0sin6hkac7prv9cdu9i9eo5mj8%2540group.calendar.google.com%2Fpublic%2Fbasic" target="_blank">calendar</a>!
+	</div>
+	<hr />
+	<div id="events">
+[% IF json_events %]
+	<div id="prev_events"></div>
+	<div id="next_events"></div>
+[% END %]
+	</div>
+</div><!-- events_listing -->
+
+
+</div><!-- end map -->
+
+<script>
+
+	[% IF !map_center %]
+		[% map_center.lat = c.user.lat; map_center.lng = c.user.lng %]
+	[% END %]
+	var myOptions = 
+		{ center: new google.maps.LatLng([% map_center.lat %], [% map_center.lng %]),
+	      zoom: 13,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	gmap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	geocoder = new google.maps.Geocoder();
+
+
+	function initialize() {
+		[% IF json_events %]
+			parse_events([% json_events %]);
+		[% END %]
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	// Make the info window close when clicking anywhere on the map.
+    google.maps.event.addListener(gmap, 'click', closeInfoWindow);
+</script>
